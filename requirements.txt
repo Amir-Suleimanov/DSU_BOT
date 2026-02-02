@@ -1,0 +1,6 @@
+aiogram==3.24.0
+python-dotenv==1.2.1
+aiosqlite==0.22.1
+SQLAlchemy==2.0.46
+bs4==0.0.2
+pytz==2025.2
