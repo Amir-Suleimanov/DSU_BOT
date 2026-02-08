@@ -82,6 +82,41 @@ class Status(Base):
 
     student_details: Mapped[List["StudentDetails"]] = relationship(back_populates="status")
 
+
+    @staticmethod
+    def active() -> int:
+        return 1
+    
+    @staticmethod
+    def graduated() -> int:
+        return 2
+    
+    @staticmethod
+    def on_sabbatical() -> int:
+        return 3
+
+    @staticmethod
+    def expelled() -> int:
+        return 4
+    
+    @staticmethod
+    def unknown() -> int:
+        return 5
+
+    @staticmethod
+    def status_by_str(status: str) -> int:
+        match status:
+            case "Действительный":
+                return 1
+            case "Выпускник":
+                return 2
+            case "В академическом":
+                return 3
+            case "Отчисленные":
+                return 4
+            case _:
+                return 5
+
 class StudentDetails(Base):
     user_id: Mapped[BigInteger] = mapped_column(BigInteger, ForeignKey("users.id"), primary_key=True, comment="Пользователь")
     gradebook_number: Mapped[Integer] = mapped_column(Integer, comment="Номер зачетной книжки")

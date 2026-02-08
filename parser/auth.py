@@ -75,16 +75,16 @@ async def collecting_cookies(
 
                 if auth_type == Auth.GBook():
                     data = {
-                        "Input.lastname": auth_data[0].capitalize(),
-                        "Input.firstname": auth_data[1].capitalize(),
-                        "Input.patr": auth_data[2].capitalize(),
+                        "Input.lastname": auth_data[0],
+                        "Input.firstname": auth_data[1],
+                        "Input.patr": auth_data[2],
                         "Input.nbook": nbook,
                         "__RequestVerificationToken": auth_token,
                     }
                 elif auth_type == Auth.Email():
                     data = {
-                        "Input.email": auth_data[0].capitalize(),
-                        "Input.password": auth_data[1].capitalize(),
+                        "Input.email": auth_data[0],
+                        "Input.password": auth_data[1],
                         "__RequestVerificationToken": auth_token,
                     }
                 else:

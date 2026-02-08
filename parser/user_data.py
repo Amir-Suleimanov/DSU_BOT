@@ -88,7 +88,7 @@ async def build_profile_data(cookie: str, student_id: str) -> dict:
         "branch": filial,
         "faculty": faculty,
         "study_program": departament,
-        "status_id": student_status,
+        "status": student_status,
         "current_semester": current_semester,
     }
 

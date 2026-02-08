@@ -7,6 +7,8 @@ from aiogram.fsm.context import FSMContext
 from FSM import AuthGBookState, AuthEmailState
 from handlers.helpers import email_auth_warning
 from database import requests as rq
+from database.models import Status
+from keyboards import reply
 from handlers.private import router
 from parser.auth import student_authentication, InvalidDataError
 from database.models import Auth
@@ -36,6 +38,7 @@ async def auth(message: types.Message, state: FSMContext, bot: Bot):
 
     data = message.text.split()
     if len(data) != 4:
+        await state.set_state(AuthGBookState.data)
         await message.answer("Неверный формат данных. Пожалуйста, введите данные по формату:\n\n"
                              "Фамилия Имя Отчество Номер_зачетки\n\n"
                              "Пример: Магомедов Магомед Магомедович 10026")
@@ -53,23 +56,24 @@ async def auth(message: types.Message, state: FSMContext, bot: Bot):
         if "e-mail" in msg.lower() or "email" in msg.lower():
             await email_auth_warning(message, state)
             return
-        await message.answer(msg)
+        await message.answer(msg, reply_markup=reply.retry_gbook_auth_keyboard)
         return
     except SiteUnavailableError:
         await message.answer(
-            "Сайт временно недоступен. Попробуйте снова через пару минут."
+            "Сайт временно недоступен. Попробуйте снова через пару минут.",
+            reply_markup=reply.retry_gbook_auth_keyboard
         )
         # TODO отправка уведомления админу
         return
 
-    if not profile_data:
-        await message.answer("Не удалось войти в аккаунт. Проверьте данные и попробуйте снова.")
+    if not profile_data and await rq.check_user_registration(message.from_user.id):
+        await message.answer("Не удалось войти в аккаунт. Проверьте данные и попробуйте снова.", reply_markup=reply.retry_gbook_auth_keyboard)
         return
 
     created = await rq.create_student_user(
         user_id=message.from_user.id,
         role_id=1,
-        status_id=1,
+        status_id=Status.status_by_str(profile_data["status"]),
         daily_limit=3,
         name=profile_data["name"],
         surname=profile_data["surname"],
@@ -141,14 +145,14 @@ async def auth_email_password(message: types.Message, state: FSMContext):
         )
         return
 
-    if not profile_data:
+    if not profile_data and await rq.check_user_registration(message.from_user.id):
         await message.answer("Не удалось войти в аккаунт. Проверьте данные и попробуйте снова.")
         return
 
     created = await rq.create_student_user(
         user_id=message.from_user.id,
         role_id=1,
-        status_id=profile_data["status_id"],
+        status_id=Status.status_by_str(profile_data["status"]),
         daily_limit=3,
         name=profile_data["name"],
         surname=profile_data["surname"],

@@ -9,3 +9,19 @@ auth_type_keyboard = InlineKeyboardMarkup(
         ],
     ]
 )
+
+retry_gbook_auth_keyboard = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="Попробовать снова", callback_data="gbook_auth"),
+        ],
+    ]
+)
+
+retry_email_auth_keyboard = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="Попробовать снова", callback_data="email_auth"),
+        ],
+    ]
+)
