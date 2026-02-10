@@ -6,10 +6,11 @@ from sqlalchemy import select
 async def create_student_user(
     user_id: int,
     role_id: int,
+    stud_id: int,
     name: str,
     surname: str,
     patronymic: str,
-    gradebook_number: int,
+    gradebook_number: int | None,
     status_id: int,
     daily_limit: int,
     branch: str,
@@ -33,6 +34,7 @@ async def create_student_user(
         session.add(
             StudentDetails(
                 user=user,
+                stud_id=stud_id,
                 gradebook_number=gradebook_number,
                 status_id=status_id,
                 daily_limit=daily_limit,

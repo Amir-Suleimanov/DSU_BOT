@@ -8,8 +8,6 @@ from FSM import AuthGBookState, AuthEmailState
 from keyboards import reply
 from database import requests as rq
 from handlers.private import router
-from parser.auth import student_authentication, InvalidDataError
-from parser.core import SiteUnavailableError
 
 
 @router.message(CommandStart())

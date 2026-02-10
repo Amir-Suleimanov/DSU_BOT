@@ -12,7 +12,7 @@ from keyboards import reply
 from handlers.private import router
 from parser.auth import student_authentication, InvalidDataError
 from database.models import Auth
-from parser.core import SiteUnavailableError
+from parser.exeptions import SiteUnavailableError
 
 
 @router.callback_query(F.data == "gbook_auth")
@@ -73,6 +73,7 @@ async def auth(message: types.Message, state: FSMContext, bot: Bot):
     created = await rq.create_student_user(
         user_id=message.from_user.id,
         role_id=1,
+        stud_id=profile_data["stud_id"],
         status_id=Status.status_by_str(profile_data["status"]),
         daily_limit=3,
         name=profile_data["name"],
@@ -152,6 +153,7 @@ async def auth_email_password(message: types.Message, state: FSMContext):
     created = await rq.create_student_user(
         user_id=message.from_user.id,
         role_id=1,
+        stud_id=profile_data["stud_id"],
         status_id=Status.status_by_str(profile_data["status"]),
         daily_limit=3,
         name=profile_data["name"],

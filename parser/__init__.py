@@ -1,4 +1,22 @@
-from .core import ParsingConfig, SSL_STATUS, REQUEST_TIMEOUT, SiteUnavailableError
+import os
+
+import pytz
+from dotenv import load_dotenv
+
+
+class ParsingConfig:
+    tz = pytz.timezone("Europe/Moscow")
+    user_agent = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+        )
+    }
+
+
+load_dotenv()
+SSL_STATUS = os.getenv("SSL_STATUS", "true").lower() in {"1", "true", "yes", "on"}
+REQUEST_TIMEOUT = int(os.getenv("REQUEST_TIMEOUT", "15"))
 
 
 class URL:
@@ -19,11 +37,9 @@ class URL:
     timetables_page = "http://iit.dgu.ru/student/timetable"
 
 
-
 __all__ = [
     "SSL_STATUS",
     "REQUEST_TIMEOUT",
-    "SiteUnavailableError",
     "URL",
     "ParsingConfig",
 ]

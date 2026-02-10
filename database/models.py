@@ -119,7 +119,8 @@ class Status(Base):
 
 class StudentDetails(Base):
     user_id: Mapped[BigInteger] = mapped_column(BigInteger, ForeignKey("users.id"), primary_key=True, comment="Пользователь")
-    gradebook_number: Mapped[Integer] = mapped_column(Integer, comment="Номер зачетной книжки")
+    stud_id: Mapped[BigInteger] = mapped_column(BigInteger, nullable=False, comment="ID студента в системе ДГУ")
+    gradebook_number: Mapped[Integer | None] = mapped_column(Integer, nullable=True, comment="Номер зачетной книжки")
     status_id: Mapped[BigInteger] = mapped_column(BigInteger, ForeignKey("status.id"), nullable=False, comment="Статус студента")
     daily_limit: Mapped[int] = mapped_column(BigInteger, nullable=False, comment="Дневной лимит")
     branch: Mapped[str] = mapped_column(String(255), comment="Филиал")
