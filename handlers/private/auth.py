@@ -66,8 +66,14 @@ async def auth(message: types.Message, state: FSMContext, bot: Bot):
         # TODO отправка уведомления админу
         return
 
-    if not profile_data and await rq.check_user_registration(message.from_user.id):
-        await message.answer("Не удалось войти в аккаунт. Проверьте данные и попробуйте снова.", reply_markup=reply.retry_gbook_auth_keyboard)
+    if not profile_data:
+        if await rq.check_user_registration(message.from_user.id):
+            await message.answer("Вы уже зарегистрированы. Данные аккаунта уже есть в системе.")
+            return
+        await message.answer(
+            "Не удалось войти в аккаунт. Проверьте данные и попробуйте снова.",
+            reply_markup=reply.retry_gbook_auth_keyboard
+        )
         return
 
     created = await rq.create_student_user(
@@ -146,8 +152,14 @@ async def auth_email_password(message: types.Message, state: FSMContext):
         )
         return
 
-    if not profile_data and await rq.check_user_registration(message.from_user.id):
-        await message.answer("Не удалось войти в аккаунт. Проверьте данные и попробуйте снова.")
+    if not profile_data:
+        if await rq.check_user_registration(message.from_user.id):
+            await message.answer("Вы уже зарегистрированы. Данные аккаунта уже есть в системе.")
+            return
+        await message.answer(
+            "Не удалось войти в аккаунт. Проверьте данные и попробуйте снова.",
+            reply_markup=reply.retry_email_auth_keyboard
+        )
         return
 
     created = await rq.create_student_user(
