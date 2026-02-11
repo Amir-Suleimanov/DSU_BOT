@@ -18,8 +18,7 @@
   - `login_by_nbook(lastname: str, firstname: str, patr: str, nbook: str) -> str`
     - То же, но по данным зачётной книжки.
 
-  - `student_authentication(auth_type: int, auth_data: list, is_student_data: bool = False)`
-    - Удобная обёртка: при `is_student_data=False` возвращает `True` при успехе; при `True` возвращает `dict` с профилем студента.
+  - `student_authentication(auth_type: int, auth_data: list)`
     - Вход: `auth_type` — значение из `database.models.Auth`, `auth_data` — список полей (см. `parser/test_parser.py`).
 
 - Общие данные (главная страница)

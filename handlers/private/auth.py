@@ -49,7 +49,6 @@ async def auth(message: types.Message, state: FSMContext, bot: Bot):
         profile_data = await student_authentication(
             auth_type=Auth.GBook(),
             auth_data=[surname, name, patronymic, gradebook_number],
-            is_student_data=True,
         )
     except InvalidDataError as err:
         msg = str(err) or "Неверные данные или вход заблокирован. Проверьте ФИО и номер зачётки."
@@ -140,7 +139,6 @@ async def auth_email_password(message: types.Message, state: FSMContext):
         profile_data = await student_authentication(
             auth_type=Auth.Email(),
             auth_data=[email, password],
-            is_student_data=True,
         )
     except InvalidDataError as err:
         msg = str(err) or "Неверные данные для входа через E-mail."

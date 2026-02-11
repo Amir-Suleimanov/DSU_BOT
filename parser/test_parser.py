@@ -149,7 +149,6 @@ def test_auth_nbook():
                 STUDENT_PATRONYMIC.strip(),
                 STUDENT_GRADEBOOK.strip(),
             ],
-            is_student_data=True,
         )
     )
     assert isinstance(profile, dict)
@@ -179,7 +178,6 @@ def test_auth_email():
         student_authentication(
             auth_type=Auth.Email(),
             auth_data=[STUDENT_EMAIL.strip(), STUDENT_PASSWORD.strip()],
-            is_student_data=True,
         )
     )
     assert isinstance(profile, dict)

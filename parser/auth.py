@@ -149,9 +149,18 @@ async def _build_profile_data(cookie: str, fallback_gradebook: str | None = None
 
 async def student_authentication(
     auth_type: int,
-    auth_data: list,
-    is_student_data: bool = False,
+    auth_data: list
 ):
+    """
+    Аутентификация студента
+    
+    Params:
+        auth_type: тип аутентификации
+        auth_data: данные для аутентификации
+    Returns:
+        Данные о студенте
+        
+    """
     try:
         _auth_type_key(auth_type)
         if auth_type == Auth.GBook():
@@ -163,16 +172,14 @@ async def student_authentication(
                 patr=auth_data[2],
                 nbook=auth_data[3],
             )
-            if not is_student_data:
-                return True
+            
             return await _build_profile_data(cookie, fallback_gradebook=auth_data[3])
 
         if auth_type == Auth.Email():
             if len(auth_data) != 2:
                 raise InvalidDataError("Для входа по email нужно 2 параметра")
             cookie = await login_by_email(email=auth_data[0], password=auth_data[1])
-            if not is_student_data:
-                return True
+            
             return await _build_profile_data(cookie)
 
         raise InvalidDataError("Неизвестный тип авторизации")
