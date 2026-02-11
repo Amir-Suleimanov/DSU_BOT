@@ -56,8 +56,8 @@ STUDENT_FIRSTNAME = ""
 STUDENT_PATRONYMIC = ""
 STUDENT_GRADEBOOK = ""
 
-STUDENT_EMAIL = "amirsuleimanof@gmail.com"
-STUDENT_PASSWORD = "DSUAm1rPass"
+STUDENT_EMAIL = ""
+STUDENT_PASSWORD = ""
 
 # Семестр для тестов partial-ручек (например: "1", "2", "3" ...)
 TEST_SEMESTER = "5"
