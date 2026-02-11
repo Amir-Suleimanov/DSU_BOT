@@ -9,10 +9,15 @@
 from __future__ import annotations
 
 import asyncio
+import os
 import sys
 from pathlib import Path
 
 import pytest
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
@@ -56,8 +61,8 @@ STUDENT_FIRSTNAME = ""
 STUDENT_PATRONYMIC = ""
 STUDENT_GRADEBOOK = ""
 
-STUDENT_EMAIL = ""
-STUDENT_PASSWORD = ""
+STUDENT_EMAIL = os.getenv("STUDENT_EMAIL")
+STUDENT_PASSWORD = os.getenv("STUDENT_PASSWORD")
 
 # Семестр для тестов partial-ручек (например: "1", "2", "3" ...)
 TEST_SEMESTER = "5"
